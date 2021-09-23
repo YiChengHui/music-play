@@ -1,0 +1,41 @@
+.loading {
+    position        : fixed;
+    top             : 0;
+    right           : 0;
+    bottom          : 0;
+    left            : 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index         : 999;
+    text-align      : center;
+}
+
+.header {
+    background-color: #C20C0C;
+    color           : #000;
+}
+
+.loading.show {
+    display: block;
+}
+
+.loading.hide {
+    display    : none;
+    height     : 0;
+    line-height: 0;
+}
+
+.loading .spin {
+    position: absolute;
+    top     : 50%;
+}
+
+.userHeader {
+    float: right;
+}
+
+.userHeader .nickname {
+    padding    : 0 3px;
+    color      : #fff;
+    user-select: none;
+    cursor     : pointer;
+}
