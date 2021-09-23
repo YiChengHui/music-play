@@ -9,6 +9,7 @@ import "./css/app.css";
 
 const { Header, Content } = Layout;
 const user = localStorage.getItem("userData");
+const userData = user ? JSON.parse(user) : {};
 
 export default class App extends Component {
 	state = {
@@ -16,7 +17,7 @@ export default class App extends Component {
 		LoginVisible: false,
 		errString: "",
 		visible: false,
-		userData: user ? JSON.parse(user) : {},
+		userData,
 	}
 
 	componentDidMount() {
@@ -33,13 +34,15 @@ export default class App extends Component {
 	async checkStatus() {
 		const random = Math.random();
 		const { data: { data } } = await api.get(`/login/status?t = ${random}`);
-		console.log(data);
 	}
 
 	async logout() {
 		const random = Math.random();
 		const { data: { data } } = await api.get(`/logout?t = ${random}`);
-		console.log(data);
+		localStorage.removeItem("userData");
+		this.setState({
+			userData: {}
+		})
 	}
 
 	LoginSuccess(data) {
@@ -57,7 +60,7 @@ export default class App extends Component {
 					<span>个人资料</span>
 				</Menu.Item>
 				<Menu.Item key={2}>
-					<span onClick={this.logout}>退出登录</span>
+					<span onClick={this.logout.bind(this)}>退出登录</span>
 				</Menu.Item>
 			</Menu>;
 
@@ -82,7 +85,7 @@ export default class App extends Component {
 						{UserAvatar}
 					</div>
 				</Header>
-				<Layout style={{ padding: '0 24px 24px' }}>
+				<Layout>
 					<Content
 						style={{
 							padding: 24,
